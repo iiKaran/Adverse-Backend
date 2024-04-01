@@ -3,8 +3,6 @@ const app = express();
 const fileUpload = require("express-fileupload");
 const cors = require("cors"); 
 const cookieParser = require("cookie-parser");
-const BranchRoutes = require("./Routes/BranchRoutes")
-const AuthRoutes = require("./Routes/AuthRoutes")
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 const  makeConnection  = require('./Configure/database')
@@ -23,8 +21,8 @@ app.use(
     tempFileDir: "/tmp",
   })
 );
-app.use("/api/v1/branch", BranchRoutes);
-app.use("/api/v1/auth", AuthRoutes);
+// app.use("/api/v1/branch", BranchRoutes);
+// app.use("/api/v1/auth", AuthRoutes);
 makeConnection();
 app.listen(PORT, () => {
   console.log("App is running live on port", PORT);

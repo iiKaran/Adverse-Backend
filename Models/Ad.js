@@ -11,10 +11,9 @@ const adSchema = new mongoose.Schema({
         trim : true , 
         require: true
     }, 
-    name:{
-        type: String , 
-        trim : true , 
-        require: true
+    by:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref:'User'
         // by 
     },
     date:{
