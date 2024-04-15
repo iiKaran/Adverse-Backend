@@ -1,19 +1,17 @@
 const User = require("../Models/User");
 const Ad= require("../Models/Ad");
 const Otp = require("../Models/Otp");
-
-
 exports.createAd= async (req, res)=>{
    try{
     const { title, description, by, place, validTill } = req.body;
-    if(!title || ! description || !by || !place || !validTill)
+    if(!title || ! description || !place)
     {
         return res.status(400).json({
             success: false , 
             message:'error while creating ad'
         })
     }
-    const ad = new Ad({ title, description, by, place, validTill });
+    const ad = new Ad({ title, description, place});
     await ad.save();
     res.status(201).json(ad);
    }
@@ -21,7 +19,7 @@ exports.createAd= async (req, res)=>{
     console.log("Error Occured While Creating Ad",err); 
     return res.status(500).json({
         success:false, 
-        message:"Error while logging in"
+        message:"Error while creating ad in"
     })
    }
 }
@@ -29,15 +27,30 @@ exports.createAd= async (req, res)=>{
 exports.deleteAd =  async (req, res) => {
     try {
      const {id}= req.body ;
-      const ad = await Ad.findById(id);
+      const ad = await Ad.findByIdAndDelete(id);
       if (!ad) {
         return res.status(404).json({ message: "Ad not found" });
       }
-      await ad.remove();
-      res.json({ message: "Ad deleted successfully" });
+      // await ad.remove();
+      return res.json({ message: "Ad deleted successfully" });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+     return  res.status(500).json({ message: err.message });
     }
 }
-  
-  
+exports.getAdds =  async (req, res) => {
+  try {
+   const {id}= req.body ;
+    const ad = await Ad.find({});
+    if (!ad) {
+      return res.status(404).json({ message: "No AD found" });
+    }
+   return res.status(200).json({
+    success:true, 
+    message:"Add Fetched Succesfully", 
+    data: ad
+   })
+
+  } catch (err) {
+   return res.status(500).json({ message: err.message });
+  }
+}

@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 const  makeConnection  = require('./Configure/database')
-
+const adRoutes = require("./Routes/adRoute");
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -24,6 +24,8 @@ app.use(
 // app.use("/api/v1/branch", BranchRoutes);
 // app.use("/api/v1/auth", AuthRoutes);
 makeConnection();
+
+app.use("/api/v1",adRoutes);
 app.listen(PORT, () => {
   console.log("App is running live on port", PORT);
 });
