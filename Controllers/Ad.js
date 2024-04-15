@@ -11,8 +11,11 @@ exports.createAd= async (req, res)=>{
             message:'error while creating ad'
         })
     }
-    const ad = new Ad({ title, description, place});
+    const ad = new Ad({ title, description, place, by});
     await ad.save();
+
+    const updatedUser = await User.findByIdAndUpdate({_id:by},{$push:{ads:ad._id}});
+  
     res.status(201).json(ad);
    }
    catch(err){

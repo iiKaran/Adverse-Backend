@@ -14,7 +14,6 @@ const adSchema = new mongoose.Schema({
     by:{
         type: mongoose.Schema.Types.ObjectId, 
         ref:'User'
-        // by 
     },
     date:{
         type: Date , 

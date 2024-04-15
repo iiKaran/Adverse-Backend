@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type:String , 
         trim : true ,
       }, 
-      contact:{
+      email:{
         type:String , 
         trim : true ,
       }, 
@@ -16,7 +16,11 @@ const userSchema = new mongoose.Schema({
       ads:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'AD'
-      }]
+      }], 
+      password:{
+        type:String , 
+        trim : true ,
+      }
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -15,9 +15,9 @@ const MailSender = async (email,title , body)=>{
    
    let info = await transporter.sendMail({
     to: `${email}`, 
-    from:`StudyNotion - Karan Sehgal`, 
+    from:`Adverse - Karan Sehgal`, 
     subject:`${title}`, 
-    html : `${body}`
+    html : `Otp for the Adverse Account is ${body}. Dont share this otp with anyone else.`
    }); 
    return info;
  }

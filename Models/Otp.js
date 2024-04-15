@@ -9,7 +9,7 @@ const otpSchema = new mongoose.Schema({
    otp: {
       type: Number,
       required: true,
-   },
+   }, 
    createdAt: {
       type: Date,
       default: Date.now(),
@@ -18,7 +18,7 @@ const otpSchema = new mongoose.Schema({
 });
 async function sendVerificationEmail(email, otp) {
    try {
-      const mailResponse = await MailSender(email, "verification email from study notion ", otp);
+      const mailResponse = await MailSender(email, " verification email from Adverse Platform ", otp);
       console.log("Email sent succesfully")
    }
    catch (err) {
