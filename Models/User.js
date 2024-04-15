@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
       }, 
       type:{
         type:String, 
-        enum :['advertiser', 'user']
+        enum :['Advertiser', 'user','advertiser']
       },
       ads:[{
         type:mongoose.Schema.Types.ObjectId,

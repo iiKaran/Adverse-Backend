@@ -4,9 +4,9 @@ const Otp = require("../Models/Otp");
 const otpGenerator = require("otp-generator");
 
 
-
 exports.logIn = async(req, res)=> { 
    try {
+    console.log("the req is ", req.body);
     const {email, password} = req.body;
     const user = await User.findOne({email:email});
     if(!user){
@@ -40,7 +40,8 @@ exports.logIn = async(req, res)=> {
 }
 
 exports.signUp = async( req , res)=>{
-    const {name, email, otp , password, } = req.body;
+    const {name, email, otp , password,accountType } = req.body;
+    console.log("the req is ", req.body);
     if(!name || ! email || !otp || ! password)
     {
         return res.status(400).json({
@@ -54,7 +55,7 @@ exports.signUp = async( req , res)=>{
     const user = await User.findOne({email:email});
     if(user)
     {
-        return res.status(400).json({
+        return res.status(300).json({
             success:false, 
             message:"User Already Exists"
         })
@@ -63,7 +64,7 @@ exports.signUp = async( req , res)=>{
     if(checkOtp && checkOtp?.otp == otp)
     {
         // otp is correct 
-        const  user = await User.create({name , password, email});
+        const  user = await User.create({name , password, email,type:accountType});
         return res.status(200).json({
             success : true , 
             message:"User Created Succesfully",
@@ -71,6 +72,7 @@ exports.signUp = async( req , res)=>{
         })  
     }
     else{
+        console.log("s")
         return res.status(400).send({
             success:false, 
             message:"Wrong Otp , check again", 
@@ -81,6 +83,7 @@ exports.signUp = async( req , res)=>{
 exports.sendOtp = async(request,response)=> {
  try {
         // fetched email 
+        console.log("the re")
         const { email } = request.body;
         // check if user exist or not 
         const checkUser = await User.findOne({ email });

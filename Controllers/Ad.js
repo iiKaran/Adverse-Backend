@@ -26,7 +26,6 @@ exports.createAd= async (req, res)=>{
     })
    }
 }
-
 exports.deleteAd =  async (req, res) => {
     try {
      const {id}= req.body ;
@@ -43,7 +42,7 @@ exports.deleteAd =  async (req, res) => {
 exports.getAdds =  async (req, res) => {
   try {
    const {id}= req.body ;
-    const ad = await Ad.find({});
+    const ad = await User.findById(id).populate("ads");
     if (!ad) {
       return res.status(404).json({ message: "No AD found" });
     }
