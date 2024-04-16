@@ -4,6 +4,7 @@ const Otp = require("../Models/Otp");
 exports.createAd= async (req, res)=>{
    try{
     const { title, description, by, place, validTill } = req.body;
+    console.log("the add req is ", req.body)
     if(!title || ! description || !place)
     {
         return res.status(400).json({
