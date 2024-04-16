@@ -4,7 +4,7 @@ const Otp = require("../Models/Otp");
 exports.createAd= async (req, res)=>{
    try{
     const { title, description, by, place, validTill } = req.body;
-    console.log("the add req is ", req.body)
+    
     if(!title || ! description || !place)
     {
         return res.status(400).json({
@@ -43,14 +43,18 @@ exports.deleteAd =  async (req, res) => {
 exports.getAdds =  async (req, res) => {
   try {
    const {id}= req.body ;
-    const ad = await User.findById(id).populate("ads");
+   console.log("the add req is ", req.body)
+    const ad = await User.findById(id).populate({
+      path: "ads",
+      populate: {
+       path: "by"}});
     if (!ad) {
       return res.status(404).json({ message: "No AD found" });
     }
    return res.status(200).json({
     success:true, 
     message:"Add Fetched Succesfully", 
-    data: ad
+    data: ad?.ads
    })
 
   } catch (err) {
