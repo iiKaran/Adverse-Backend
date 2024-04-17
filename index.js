@@ -1,5 +1,26 @@
 const express = require('express');
 const app = express();
+//
+const http = require('http');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server);
+//
+//
+io.on('connection', (socket) => {
+  console.log('Client connected');
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+
+  socket.on('newAdvertisement', (advertisement) => {
+    "Adv is here"
+    console.log('New advertisement:', advertisement);
+    io.emit('newAdvertisement', advertisement); // Broadcast the new advertisement to all clients
+  });
+});
+//
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -29,7 +50,7 @@ makeConnection();
 app.use('/api/v1', adRoutes);
 app.use('/api/v1', AuthRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('App is running live on port', PORT);
 });
 app.get('/', (req, res) => {
