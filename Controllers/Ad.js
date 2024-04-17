@@ -3,8 +3,8 @@ const Ad= require("../Models/Ad");
 const Otp = require("../Models/Otp");
 exports.createAd= async (req, res)=>{
    try{
-    const { title, description, by, place, validTill } = req.body;
-    
+    const { title, description, by, place,image} = req.body;
+    // console.log("the req is ", req.body);
     if(!title || ! description || !place)
     {
         return res.status(400).json({
@@ -12,7 +12,7 @@ exports.createAd= async (req, res)=>{
             message:'error while creating ad'
         })
     }
-    const ad = new Ad({ title, description, place, by});
+    const ad = new Ad({ title, description, place, by,image});
     await ad.save();
 
     const updatedUser = await User.findByIdAndUpdate({_id:by},{$push:{ads:ad._id}});
@@ -55,6 +55,25 @@ exports.getAdds =  async (req, res) => {
     success:true, 
     message:"Add Fetched Succesfully", 
     data: ad?.ads
+   })
+
+  } catch (err) {
+   return res.status(500).json({ message: err.message });
+  }
+}
+
+exports.getAllAddsByUser =  async (req, res) => {
+  try {
+   const {id}= req.body ;
+   console.log("the add req is ", req.body)
+    const ad = await Ad.find({});
+    if (!ad) {
+      return res.status(404).json({ message: "No AD found" });
+    }
+   return res.status(200).json({
+    success:true, 
+    message:"Add Fetched Succesfully", 
+    data: ad
    })
 
   } catch (err) {

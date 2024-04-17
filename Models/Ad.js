@@ -6,6 +6,11 @@ const adSchema = new mongoose.Schema({
         trim : true , 
         require: true
     },
+    image:{
+        type: String , 
+        trim : true , 
+        require: true
+    },
     description:{
         type: String , 
         trim : true , 
@@ -25,7 +30,11 @@ const adSchema = new mongoose.Schema({
     },
     validTill :{
         type: Date , 
-        default: Date.now(),
+        default: function() {
+            const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + 3);
+            return currentDate;
+        }
     },
     status:{
         type:Boolean, 
